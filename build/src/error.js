@@ -1,2 +1,0 @@
-let{error:e}=console,n=e=>"Parsing"===e.ExceptionKind,o=e=>"Resolution"===e.ExceptionKind;export const isResolutionException=e=>e instanceof Error&&o(JSON.parse(e.message));export const errorHandler=r=>{if(!(r instanceof Error))return e(`Unexpected error: ${r}`);let t=JSON.parse(r.message);n(t)||o(t)||e("Unknown exception type"),e(t)};
-//# sourceMappingURL=error.js.map
