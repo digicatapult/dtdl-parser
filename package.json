@@ -8,7 +8,8 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
     "build": "npx swc ./src ./package.json -d ./build --copy-files",
     "clean": "rimraf -rf ./build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "depcheck": "depcheck"
   },
   "repository": {
     "type": "git",
@@ -27,9 +28,6 @@
     "url": "https://github.com/digicatapult/dtdl-parser/issues"
   },
   "homepage": "https://github.com/digicatapult/dtdl-parser#readme",
-  "dependencies": {
-    "fs": "^0.0.1-security"
-  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.12.0",
@@ -46,6 +44,7 @@
     "eslint": "^9.12.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
     "mocha": "^10.7.3",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
