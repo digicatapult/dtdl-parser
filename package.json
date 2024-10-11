@@ -3,14 +3,12 @@
   "version": "0.0.1",
   "description": "JS tool to parse DTDL defined Ontologies",
   "main": "src/index.ts",
-  "bin": {
-    "dtdl-parser": "./build/src/index.js"
-  },
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
     "build": "npx swc ./src ./package.json -d ./build --copy-files",
-    "clean": "rimraf -rf ./build"
+    "clean": "rimraf -rf ./build",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
