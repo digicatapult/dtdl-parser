@@ -141,7 +141,7 @@ jobs:
           - name: Install packages
             run: npm ci
           - name: Publish to github packages
-            run: npm adduser && npm publish --access public
+            run: npm publish --access public
             env:
                 NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
