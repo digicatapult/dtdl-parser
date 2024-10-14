@@ -80,14 +80,16 @@ jobs:
             run: npm run depcheck
     tests:
         name: Run tests
+        strategy:
+            fail-fast: false
+            matrix:
+                command: ['test']
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v4
-          - uses: actions/setup-node@master
+          - uses: actions/setup-node@v4
             with:
                 node-version: 20.x
-          - name: Use npm latest
-            run: npm install -g npm@latest
           - name: Cache Node.js modules
             uses: actions/cache@v4
             with:
@@ -98,16 +100,10 @@ jobs:
                     ${{ runner.OS }}-
           - name: Install Packages
             run: npm ci
-          - name: Setup dependencies
-            run: docker compose -f ./docker-compose-test.yaml up -d
-          - name: Sleep
-            uses: kibertoad/wait-action@1.0.1
-            with:
-                time: '30s'
-          - name: Run unit tests
-            run: npm run test:unit
-          - name: Run integration tests
-            run: npm run test
+          - name: Build
+            run: npm run build
+          - name: Run tests
+            run: npm run ${{ matrix.command }}
     check-version:
         name: 'Check version'
         runs-on: ubuntu-latest
