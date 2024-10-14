@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
-    "build": "swc ./src ./package.json -d ./build --copy-files && npm npm run interop:build",
+    "build": "swc ./src ./package.json -d ./build --copy-files && npm run interop:build",
     "interop:debug": "dotnet build interop",
     "interop:build": "dotnet build interop --configuration Release",
     "clean": "rimraf -rf ./build",
