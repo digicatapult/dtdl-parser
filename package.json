@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
-    "build": "npx swc ./src ./package.json -d ./build --copy-files",
+    "build": "swc ./src ./package.json -d ./build --copy-files",
     "clean": "rimraf -rf ./build",
     "lint": "eslint .",
     "depcheck": "depcheck"
