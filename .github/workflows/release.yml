@@ -2,7 +2,7 @@ name: Release
 
 on: 
     push:
-        branches: ['main', "init-commit"]
+        branches: ['main']
 jobs:
     preconditions:
         runs-on: ubuntu-latest
