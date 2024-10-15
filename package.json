@@ -1,12 +1,12 @@
 {
   "name": "@digicatapult/dtdl-parser",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "JS tool to parse DTDL defined Ontologies",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
-    "build": "swc ./src ./package.json -d build --strip-leading-paths --copy-files && npm run interop:build",
+    "build": "swc ./src ./package.json -d build --copy-files && npm run interop:build",
     "interop:debug": "dotnet build interop",
     "interop:build": "dotnet build interop --configuration Release",
     "clean": "rimraf -rf ./build",
