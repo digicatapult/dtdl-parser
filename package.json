@@ -8,6 +8,9 @@
     "import": "./build/index.js"
   },
   "types": "./build/index.d.ts",
+  "files": [
+    "build/"
+  ],
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
     "build": "npm run build:ts && npm run interop:build && npm run build:declarations",
@@ -24,10 +27,6 @@
     "type": "git",
     "url": "git+https://github.com/digicatapult/dtdl-parser.git"
   },
-  "files": [
-    "build",
-    ""
-  ],
   "keywords": [
     "dtdl",
     "digital",
