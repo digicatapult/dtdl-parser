@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { DtdlObjectModel, InterfaceInfo } from '../interop/DtdlOm.js'
 import { errorHandler, isResolutionException } from './error.js'
-import { Parser } from './interop.js'
+import { Parser, getInterop } from './interop.js'
 
 const { log, error } = console
 
@@ -128,3 +128,5 @@ export const parseDirectories = (directory: string, parser: Parser): DtdlObjectM
 
   return fullModel
 }
+
+export { Parser, getInterop, isResolutionException, errorHandler }
