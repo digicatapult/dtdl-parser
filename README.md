@@ -21,8 +21,7 @@ Build javascript files
 Basic usage
 
 ```javascript
-import { parseDirectories,  validateDirectories} from "dtdl-parser"
-import { getInterop } from 'dtdl-parser/src/interop'
+import { parseDirectories,  validateDirectories, getInterop } from "dtdl-parser"
 
 const parser = await getInterop()
 parseDirectories('../dtdl/simple', parser)
