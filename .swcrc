@@ -24,9 +24,9 @@
     }
   },
   "exclude": [
-    "./**/__tests__/"
+    "__tests__",
+    "interop"
   ],
   "sourceMaps": true,
-  "isModule": true,
-  "minify": true
+  "isModule": true
 }

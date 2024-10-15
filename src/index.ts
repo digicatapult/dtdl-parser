@@ -1,131 +1,134 @@
 import fs from 'fs'
 import path from 'path'
-import { DtdlObjectModel, InterfaceInfo } from '../interop/DtdlOm.js'
+import type { DtdlObjectModel, InterfaceInfo } from '../types/DtdlOm.d.ts'
 import { errorHandler, isResolutionException } from './error.js'
-import { Parser, getInterop } from './interop.js'
+import type { Parser } from './interop.js'
 
 const { log, error } = console
 
-export const searchForJsonFiles = (directory: string): string[] => {
-  if (!fs.existsSync(directory)) {
-    error(`'${directory}' not a valid filepath`)
-    return []
-  }
+export type * from '../types/DtdlOm.d.ts'
+export type * from '../types/DtdlErr.d.ts'
+export { getInterop } from './interop.js'
 
-  return fs
-    .readdirSync(directory)
-    .map((file) => path.join(directory, file))
-    .reduce((jsonFiles, fullPath) => {
-      if (fs.statSync(fullPath).isDirectory()) {
-        return jsonFiles.concat(searchForJsonFiles(fullPath)) //recursive
-      } else if (path.extname(fullPath) === '.json') {
-        return jsonFiles.concat(fullPath)
-      }
-      return jsonFiles
-    }, [] as string[])
+export const searchForJsonFiles = (directory: string): string[] => {
+    if (!fs.existsSync(directory)) {
+        error(`'${directory}' not a valid filepath`)
+        return []
+    }
+
+    return fs
+        .readdirSync(directory)
+        .map((file) => path.join(directory, file))
+        .reduce((jsonFiles, fullPath) => {
+            if (fs.statSync(fullPath).isDirectory()) {
+                return jsonFiles.concat(searchForJsonFiles(fullPath)) //recursive
+            } else if (path.extname(fullPath) === '.json') {
+                return jsonFiles.concat(fullPath)
+            }
+            return jsonFiles
+        }, [] as string[])
 }
 
 const readJsonFile = (filepath: string): unknown | null => {
-  try {
-    const file = fs.readFileSync(filepath, 'utf-8')
-    const json = JSON.parse(file)
-    return json
-  } catch (err) {
-    error(`Invalid JSON at '${filepath}'`)
-    error(err)
-    return null
-  }
+    try {
+        const file = fs.readFileSync(filepath, 'utf-8')
+        const json = JSON.parse(file)
+        return json
+    } catch (err) {
+        error(`Invalid JSON at '${filepath}'`)
+        error(err)
+        return null
+    }
 }
 
 const combineJson = (filepaths: string[]) => {
-  const combinedJson: unknown[] = []
+    const combinedJson: unknown[] = []
 
-  for (const filepath of filepaths) {
-    const json = readJsonFile(filepath)
-    if (json === null) {
-      return null // exit on any error
+    for (const filepath of filepaths) {
+        const json = readJsonFile(filepath)
+        if (json === null) {
+            return null // exit on any error
+        }
+        combinedJson.push(json)
     }
-    combinedJson.push(json)
-  }
 
-  return combinedJson
+    return combinedJson
 }
 
 const validateFile = (filepath: string, parserModule: Parser, incResolutionException: boolean): boolean => {
-  try {
-    const file = fs.readFileSync(filepath, 'utf-8')
-    parserModule.parse(file)
-    log(`Successfully validated '${filepath}'`)
-    return true
-  } catch (err) {
-    if (!incResolutionException && isResolutionException(err)) {
-      // ignore resolution exception
-      log(`Successfully validated '${filepath}'`)
-      return true
+    try {
+        const file = fs.readFileSync(filepath, 'utf-8')
+        parserModule.parse(file)
+        log(`Successfully validated '${filepath}'`)
+        return true
+    } catch (err) {
+        if (!incResolutionException && isResolutionException(err)) {
+            // ignore resolution exception
+            log(`Successfully validated '${filepath}'`)
+            return true
+        }
+        error(`Error parsing '${filepath}'`)
+        errorHandler(err)
+        return false
     }
-    error(`Error parsing '${filepath}'`)
-    errorHandler(err)
-    return false
-  }
 }
 
 const parseDtdl = (json: unknown[], parserModule: Parser): DtdlObjectModel | null => {
-  try {
-    const model = JSON.parse(parserModule.parse(JSON.stringify(json))) as DtdlObjectModel
-    log(`Successfully parsed`)
-    return model
-  } catch (err) {
-    error(`Error parsing`)
-    errorHandler(err)
-    return null
-  }
+    try {
+        const model = JSON.parse(parserModule.parse(JSON.stringify(json))) as DtdlObjectModel
+        log(`Successfully parsed`)
+        return model
+    } catch (err) {
+        error(`Error parsing`)
+        errorHandler(err)
+        return null
+    }
 }
 
 export const validateDirectories = (directory: string, parser: Parser, incResolutionException: boolean): boolean => {
-  log(`${parser.parserVersion()}\n`)
-  log(`Validating DTDL at: '${directory}'`)
+    log(`${parser.parserVersion()}\n`)
+    log(`Validating DTDL at: '${directory}'`)
 
-  const filepaths = searchForJsonFiles(directory)
-  if (filepaths.length < 1) return false
+    const filepaths = searchForJsonFiles(directory)
+    if (filepaths.length < 1) return false
 
-  log(`Found ${filepaths.length} files:`)
-  log(filepaths)
+    log(`Found ${filepaths.length} files:`)
+    log(filepaths)
 
-  for (const filepath of filepaths) {
-    const isValid = validateFile(filepath, parser, incResolutionException)
-    if (!isValid) return false // stop validating if error
-  }
+    for (const filepath of filepaths) {
+        const isValid = validateFile(filepath, parser, incResolutionException)
+        if (!isValid) return false // stop validating if error
+    }
 
-  log(`All files validated!\n`)
-  return true
+    log(`All files validated!\n`)
+    return true
 }
 
 export const parseDirectories = (directory: string, parser: Parser): DtdlObjectModel | null => {
-  log(`${parser.parserVersion()}\n`)
-  log(`Parsing DTDL at: '${directory}'`)
+    log(`${parser.parserVersion()}\n`)
+    log(`Parsing DTDL at: '${directory}'`)
 
-  const filepaths = searchForJsonFiles(directory)
-  if (filepaths.length < 1) return null
+    const filepaths = searchForJsonFiles(directory)
+    if (filepaths.length < 1) return null
 
-  log(`Found ${filepaths.length} files:`)
-  log(filepaths)
+    log(`Found ${filepaths.length} files:`)
+    log(filepaths)
 
-  const fullJson = combineJson(filepaths)
-  if (fullJson === null) return null
+    const fullJson = combineJson(filepaths)
+    if (fullJson === null) return null
 
-  const fullModel = parseDtdl(fullJson, parser)
-  if (fullModel === null) return null
+    const fullModel = parseDtdl(fullJson, parser)
+    if (fullModel === null) return null
 
-  log(`All files parsed!\n`)
-  log(`Entities:`)
-  log(Object.keys(fullModel))
+    log(`All files parsed!\n`)
+    log(`Entities:`)
+    log(Object.keys(fullModel))
 
-  // Example type guard
-  const interfaces: InterfaceInfo[] = Object.values(fullModel).filter(
-    (value): value is InterfaceInfo => value.EntityKind === 'Interface'
-  )
-  log(`Number of interfaces: ${interfaces.length}`)
+    // Example type guard
+    const interfaces: InterfaceInfo[] = Object.values(fullModel).filter(
+        (value): value is InterfaceInfo => value.EntityKind === 'Interface'
+    )
+    log(`Number of interfaces: ${interfaces.length}`)
 
-  return fullModel
+    return fullModel
 }
-export { errorHandler, getInterop, isResolutionException }

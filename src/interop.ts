@@ -1,5 +1,5 @@
 export const getInterop = async (): Promise<Parser> => {
-  const module = await import('../interop/modelParser.js')
+  const module = await import('./interop/modelParser.js')
   return module as Parser
 }
 

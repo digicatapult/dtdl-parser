@@ -33,39 +33,18 @@ jobs:
             ORG_NAME=$(echo "${{ github.event.repository.owner.name }}" | tr '[:upper:]' '[:lower:]')
             echo "REPO_NAME=$REPO_NAME" >> $GITHUB_OUTPUT
             echo "ORG_NAME=$ORG_NAME" >> $GITHUB_OUTPUT
-    lint:
-        name: Run lint
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-node@master
-          with:
-            node-version: 20.x
-        - name: Use npm latest
-          run: npm install -g npm@latest
-        - name: Cache Node.js modules
-          uses: actions/cache@v4
-          with:
-            path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-            key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-                ${{ runner.OS }}-node-
-                ${{ runner.OS }}-
-        - name: Install Packages
-          run: npm ci
-        - name: Lint
-          run: npm run lint
-
-    dependency-check:
-        name: Run dependency check
+    static-checks:
+        name: Run Static Analysis Checks
+        strategy:
+            fail-fast: false
+            matrix:
+                command: [lint, depcheck, check]
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v4
-          - uses: actions/setup-node@master
+          - uses: actions/setup-node@v4
             with:
                 node-version: 20.x
-          - name: Use npm latest
-            run: npm install -g npm@latest
           - name: Cache Node.js modules
             uses: actions/cache@v4
             with:
@@ -76,8 +55,8 @@ jobs:
                     ${{ runner.OS }}-
           - name: Install Packages
             run: npm ci
-          - name: Dependency Check
-            run: npm run depcheck
+          - name: Checks
+            run: npm run ${{ matrix.command }}
     tests:
         name: Run tests
         strategy:
@@ -129,8 +108,7 @@ jobs:
         name: 'Publish Github package'
         needs:
         - preconditions
-        - lint
-        - dependency-check
+        - static-checks
         - tests
         - check-version
         runs-on: ubuntu-latest
@@ -154,8 +132,7 @@ jobs:
         name: 'Publish package to NPMJS'
         needs:
         - preconditions
-        - lint
-        - dependency-check
+        - static-checks
         - tests
         - check-version
         runs-on: ubuntu-latest
@@ -184,7 +161,7 @@ jobs:
 
     publish:
         name: 'Publish release'
-        needs: [preconditions, lint, dependency-check, tests, check-version]
+        needs: [preconditions, static-checks, tests, check-version]
         runs-on: ubuntu-latest
         if: ${{ needs.check-version.outputs.is_new_version == 'true' }}
 

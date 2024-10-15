@@ -1,4 +1,4 @@
-import { ModelingException, ParsingException, ResolutionException } from '../interop/DtdlErr.js'
+import type { ModelingException, ParsingException, ResolutionException } from '../types/DtdlErr.d.ts'
 
 const { error } = console
 

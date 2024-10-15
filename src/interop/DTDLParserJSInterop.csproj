@@ -13,7 +13,7 @@
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <EventSourceSupport>false</EventSourceSupport>
     <WasmEmitSymbolMap>false</WasmEmitSymbolMap>
-    <WasmAppDir>../build/interop</WasmAppDir>
+    <WasmAppDir>../../build/interop</WasmAppDir>
   </PropertyGroup>
 
   <ItemGroup>

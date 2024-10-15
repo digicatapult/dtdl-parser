@@ -17,6 +17,15 @@
     "outDir": "build",
     "noImplicitAny": false
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__", "test"]
+  "include": [
+    "src",
+    "types/DtdlErr.d.ts",
+    "types/DtdlOm.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__",
+    "test",
+    "src/interop"
+  ]
 }
