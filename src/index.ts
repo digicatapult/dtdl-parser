@@ -128,5 +128,4 @@ export const parseDirectories = (directory: string, parser: Parser): DtdlObjectM
 
   return fullModel
 }
-
 export { errorHandler, getInterop, isResolutionException }

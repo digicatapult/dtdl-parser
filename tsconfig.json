@@ -13,9 +13,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
     "outDir": "build",
-    "resolveJsonModule": true,
     "noImplicitAny": false
   },
+  "include": ["src"],
   "exclude": ["node_modules", "**/__tests__", "test"]
 }

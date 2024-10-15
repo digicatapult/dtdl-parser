@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dtdl-parser",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "JS tool to parse DTDL defined Ontologies",
   "main": "build/src/index.js",
   "type": "module",

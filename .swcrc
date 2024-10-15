@@ -24,7 +24,7 @@
     }
   },
   "exclude": [
-    "/__tests__/"
+    "./**/__tests__/"
   ],
   "sourceMaps": true,
   "isModule": true,
