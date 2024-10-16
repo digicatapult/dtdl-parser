@@ -1,0 +1,70 @@
+{
+  "name": "@digicatapult/dtdl-parser",
+  "version": "0.0.16",
+  "description": "JS tool to parse DTDL defined Ontologies",
+  "main": "build/index.js",
+  "type": "module",
+  "exports": {
+    "import": "./build/index.js"
+  },
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/",
+    "types/"
+  ],
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
+    "build": "npm run build:ts && npm run interop:build && npm run build:declarations",
+    "build:declarations": "tsc --emitDeclarationOnly",
+    "interop:debug": "dotnet build interop",
+    "interop:build": "dotnet build src/interop --configuration Release",
+    "build:ts": "swc ./src ./types -d ./build --strip-leading-paths",
+    "check": "tsc --noEmit",
+    "clean": "rimraf -rf ./build",
+    "lint": "eslint .",
+    "depcheck": "depcheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digicatapult/dtdl-parser.git"
+  },
+  "keywords": [
+    "dtdl",
+    "digital",
+    "twins",
+    "parsing",
+    "tool"
+  ],
+  "author": "Digital Catapult",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/digicatapult/dtdl-parser/issues"
+  },
+  "homepage": "https://github.com/digicatapult/dtdl-parser#readme",
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.12.0",
+    "@swc-node/register": "^1.10.9",
+    "@swc/cli": "^0.4.1-nightly.20240914",
+    "@swc/core": "^1.7.35",
+    "@types/chai": "^5.0.0",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "chai": "^5.1.1",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "mocha": "^10.7.3",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">= 20"
+  }
+}

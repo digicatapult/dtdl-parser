@@ -1,0 +1,6 @@
+ignores: [
+    '@swc-node/register',
+    'prettier-plugin-organize-imports',
+    'rimraf',
+    'typescript'
+]

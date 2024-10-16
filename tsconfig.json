@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "outDir": "build",
+    "noImplicitAny": false
+  },
+  "include": [
+    "src",
+    "types/DtdlErr.d.ts",
+    "types/DtdlOm.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__",
+    "test",
+    "src/interop"
+  ]
+}

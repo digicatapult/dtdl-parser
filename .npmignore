@@ -1,0 +1,12 @@
+.github/
+node_modules/
+dtdl/
+src/
+test/
+types/
+.depcheck
+.prettierrc
+.swcrc
+eslint.config.mjs
+package-lock.json
+tsconfig.json
