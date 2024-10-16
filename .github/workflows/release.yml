@@ -161,7 +161,7 @@ jobs:
 
     publish:
         name: 'Publish release'
-        needs: [preconditions, static-checks, tests, check-version]
+        needs: [publish-npm, publish-gh]
         runs-on: ubuntu-latest
         if: ${{ needs.check-version.outputs.is_new_version == 'true' }}
 
