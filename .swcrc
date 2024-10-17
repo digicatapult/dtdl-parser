@@ -18,14 +18,14 @@
       },
       "mangle": true
     },
-    "target": "ES2022",
+    "target": "es2022",
     "experimental": {
       "keepImportAttributes": true
     }
   },
   "exclude": [
     "__tests__",
-    "interop"
+    "interop/"
   ],
   "sourceMaps": true,
   "isModule": true
