@@ -2,7 +2,7 @@ name: Release
 
 on: 
     push:
-        branches: ['main']
+        branches: ['main', 'bug/publish-release-failing']
 jobs:
     preconditions:
         runs-on: ubuntu-latest
@@ -121,7 +121,7 @@ jobs:
                 node-version: '16.x'
                 registry-url: 'https://npm.pkg.github.com'
                 scope: '@digicatapult'
-          - name: Install packages
+          - name: Install packages 
             run: npm ci
           - name: Publish to github packages
             run: npm publish --access public
@@ -161,38 +161,26 @@ jobs:
 
     publish:
         name: 'Publish release'
-        needs: [publish-npm, publish-gh]
+        needs: 
+          - publish-npm
+          - publish-gh
         runs-on: ubuntu-latest
         if: ${{ needs.check-version.outputs.is_new_version == 'true' }}
 
         steps:
           - uses: actions/checkout@v4
-
+          # Build github release
           - name: Build release version
-            uses: softprops/action-gh-release@v2
+            uses: 'marvinpinto/action-automatic-releases@latest'
             with:
-                token: '${{ secrets.GITHUB_TOKEN }}'
-                tag_name: ${{ needs.check-version.outputs.version }}
-                prerelease: false
-                name: ${{ needs.check-version.outputs.version }}
-                generate_release_notes: true
-          - name: Delete release latest
-            uses: actions/github-script@v7
-            with:
-                github-token: ${{secrets.GITHUB_TOKEN}}
-                script: |
-                    const { owner, repo } = context.repo
-                    try {
-                    await github.rest.git.deleteRef({ owner, repo, ref: 'tags/latest' })
-                    }
-                    catch (err) {
-                    if (err.status !== 422) throw err
-                    }
+              repo_token: '${{ secrets.GITHUB_TOKEN }}'
+              automatic_release_tag: ${{ needs.check-version.outputs.version }}
+              prerelease: false
+              title: Release ${{ needs.check-version.outputs.version }}
           - name: Build release latest
-            uses: softprops/action-gh-release@v2
+            uses: 'marvinpinto/action-automatic-releases@latest'
             with:
-                token: '${{ secrets.GITHUB_TOKEN }}'
-                tag_name: latest
-                prerelease: false
-                name: Latest ${{ needs.check-version.outputs.version }}
-                generate_release_notes: true
+              repo_token: '${{ secrets.GITHUB_TOKEN }}'
+              automatic_release_tag: latest
+              prerelease: false
+              title: Latest Release ${{ needs.check-version.outputs.version }}
