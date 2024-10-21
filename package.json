@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dtdl-parser",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "JS tool to parse DTDL defined Ontologies",
   "main": "build/index.js",
   "type": "module",
@@ -18,7 +18,7 @@
     "build:declarations": "tsc --emitDeclarationOnly",
     "interop:debug": "dotnet build interop",
     "interop:build": "dotnet build src/interop --configuration Release",
-    "build:ts": "swc ./src ./types -d ./build --strip-leading-paths",
+    "build:ts": "swc ./src -d ./build --strip-leading-paths",
     "check": "tsc --noEmit",
     "clean": "rimraf -rf ./build",
     "lint": "eslint .",
