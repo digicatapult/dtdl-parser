@@ -1,5 +1,5 @@
-import { getInterop, parseDirectories } from '../../'
 import { expect } from 'chai'
+import { getInterop, parseDirectories } from '../../'
 import { exampleModel, fixturesFilepath } from '../../src/__tests__/index.test'
 
 describe('integration test on build and package integrity', () => {
