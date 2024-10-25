@@ -6,8 +6,8 @@ describe('integration test on build and package integrity', () => {
   describe('parser to function as expected', async () => {
     const parser = await getInterop()
     it('parser to function as expected', () => {
-        const model = parseDirectories(fixturesFilepath, parser)
-        expect(model).to.equal(exampleModel)
+      const model = parseDirectories(fixturesFilepath, parser)
+      expect(model).to.equal(exampleModel)
     })
   })
 })
