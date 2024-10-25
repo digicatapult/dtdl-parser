@@ -14,16 +14,14 @@
   ],
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./src/**/*.test.ts",
-    "test:integration": "npm run build:package && NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./test/**/*.test.ts && npm run clean:package",
+    "test:integration": "npm run build && NODE_ENV=test ./node_modules/.bin/mocha --config ./test/mocharc.json ./test/**/*.test.ts",
     "build": "npm run build:ts && npm run interop:build && npm run build:declarations",
     "build:declarations": "tsc --emitDeclarationOnly",
-    "build:package": "npm pack && npm install -g digicatapult-dtdl-parser-*.tgz",
     "interop:debug": "dotnet build interop",
     "interop:build": "dotnet build src/interop --configuration Release",
     "build:ts": "swc ./src -d ./build --strip-leading-paths",
     "check": "tsc --noEmit",
     "clean": "rimraf -rf ./build",
-    "clean:package": "rimraf *.tgz && npm uninstall @digicatapult/dtdl-parser",
     "lint": "eslint .",
     "depcheck": "depcheck"
   },

@@ -1,4 +1,4 @@
-import { getInterop, parseDirectories } from '@digicatapult/dtdl-parser'
+import { getInterop, parseDirectories } from '../../'
 import { expect } from 'chai'
 import { exampleModel, fixturesFilepath } from '../../src/__tests__/index.test'
 
