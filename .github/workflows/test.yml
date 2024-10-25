@@ -117,9 +117,5 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: build package
-        run: npm pack
-      - name: install built package
-        run: npm install digicatapult-dtdl-parser-${{ needs.check-version.outputs.version }}.tgz
       - name: run integration tests
         run: npm run test:integration
