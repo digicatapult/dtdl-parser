@@ -90,3 +90,36 @@ jobs:
         uses: digicatapult/check-version@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+  
+  integration-tests:    
+    name: Run Integration tests
+    needs: [check-version]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-verions: 20.x
+      - name: Cache Node.js modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+      - uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: '8.0.x'
+      - name: Install wasm tools
+        run: dotnet workload install wasm-tools
+      - name: Install Packages
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: build package
+        run: npm pack
+      - name: install built package
+        run: npm install digicatapult-dtdl-parser-${{ needs.check-version.outputs.version }}.tgz
+      - name: run integration tests
+        run: npm run test:integration
