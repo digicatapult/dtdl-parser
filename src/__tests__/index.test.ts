@@ -4,9 +4,9 @@ import path from 'path'
 import { parseDirectories, searchForJsonFiles, validateDirectories } from '../index'
 import { Parser } from '../interop'
 
-export const fixturesFilepath = path.resolve('src/__tests__/fixtures')
+const fixturesFilepath = path.resolve('src/__tests__/fixtures')
 
-export const exampleModel = {
+const exampleModel = {
   'dtmi:com:example:base;1': {
     languageMajorVersion: 3,
     Id: 'dtmi:com:example:base;1',
