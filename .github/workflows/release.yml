@@ -56,9 +56,6 @@ jobs:
 
   tests:
     name: Run tests
-    strategy:
-      matrix:
-        command: ['test', 'test:integration']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,8 +72,18 @@ jobs:
             ${{ runner.OS }}-
       - name: Install Packages
         run: npm ci
-      - name: Run tests
-        run: npm run ${{ matrix.command }}
+      - name: Run unit test
+        run: npm run test
+      - uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: '8.0.x'
+      - name: Install wasm tools
+        run: dotnet workload install wasm-tools
+      - name: Build
+        run: npm run build
+      - name: Run integration test
+        run: npm run test:integration
+
 
   check-version:
     name: "Check version"
