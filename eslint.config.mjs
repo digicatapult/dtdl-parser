@@ -47,6 +47,6 @@ export default [
     },
   },
   {
-    ignores: ['build/', 'node_modules/', 'interop/'],
+    ignores: ['build/', 'node_modules/', 'src/interop/'],
   },
 ]

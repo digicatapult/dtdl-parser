@@ -56,6 +56,9 @@ jobs:
 
   tests:
     name: Run tests
+    strategy:
+      matrix:
+        command: ['test', 'test:integration']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -73,7 +76,7 @@ jobs:
       - name: Install Packages
         run: npm ci
       - name: Run tests
-        run: npm run test
+        run: npm run ${{ matrix.command }}
 
   check-version:
     name: "Check version"

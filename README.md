@@ -1,6 +1,6 @@
 # dtdl-parser library
 
-A library for parsing and validating (DTDL)[https://learn.microsoft.com/en-us/azure/digital-twins/concepts-models] ontologies.
+A library for parsing and validating [DTDL](https://learn.microsoft.com/en-us/azure/digital-twins/concepts-models) ontologies.
 
 ## Installation / Adding to the Package.json
 
@@ -8,7 +8,7 @@ A library for parsing and validating (DTDL)[https://learn.microsoft.com/en-us/az
 
 ```sh
 // with npm
-npm install @digicatapult/ui-component-library
+npm install @digicatapult/dtdl-parser
 ```
 
 ## Basic Usage
@@ -16,7 +16,7 @@ npm install @digicatapult/ui-component-library
 Install dependencies
 
 ```javascript
-import { parseDirectories,  validateDirectories, getInterop } from "dtdl-parser"
+import { parseDirectories,  validateDirectories, getInterop } from "@digicatapult/dtdl-parser"
 
 
 const parser = await getInterop()
