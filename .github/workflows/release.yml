@@ -73,10 +73,18 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
+      - uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: '8.0.x'
+      - name: Install wasm tools
+        run: dotnet workload install wasm-tools
       - name: Install Packages
         run: npm ci
+      - name: Build
+        run: npm run build
       - name: Run tests
         run: npm run ${{ matrix.command }}
+
 
   check-version:
     name: "Check version"
