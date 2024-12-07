@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dtdl-parser",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "JS tool to parse DTDL defined Ontologies",
   "main": "build/index.js",
   "type": "module",
@@ -47,7 +47,7 @@
     "@eslint/js": "^9.16.0",
     "@swc-node/register": "^1.10.9",
     "@swc/cli": "^0.5.2",
-    "@swc/core": "^1.9.3",
+    "@swc/core": "^1.10.0",
     "@types/chai": "^5.0.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.1",
@@ -60,7 +60,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.13.0",
     "mocha": "^11.0.1",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2"
