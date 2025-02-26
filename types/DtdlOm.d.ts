@@ -130,13 +130,13 @@ export interface EntityInfo {
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   UndefinedProperties: { [property: string]: any }
   ClassId: string
-  comment?: string
+  comment?: string | null
   description: { [languageCode: string]: string }
   displayName: { [languageCode: string]: string }
   languageMajorVersion: number
   Id: string
-  ChildOf?: string
-  DefinedIn?: string
+  ChildOf?: string | null
+  DefinedIn?: string | null
 }
 
 export type EntityType =

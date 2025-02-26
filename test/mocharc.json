@@ -2,5 +2,5 @@
   "timeout": 5000,
   "exit": true,
   "extension": "ts",
-  "node-option": ["import=@swc-node/register/esm-register"]
+  "node-option": ["import=@swc-node/register/esm-register", "enable-source-maps"]
 }
