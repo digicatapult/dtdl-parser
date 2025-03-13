@@ -73,9 +73,9 @@ const validateFile = (filepath: string, parserModule: Parser, incResolutionExcep
   }
 }
 
-const parseDtdl = (json: unknown[], parserModule: Parser): DtdlObjectModel | null => {
+export const parseDtdl = (json: string, parserModule: Parser): DtdlObjectModel | null => {
   try {
-    const model = JSON.parse(parserModule.parse(JSON.stringify(json))) as DtdlObjectModel
+    const model = JSON.parse(parserModule.parse(json)) as DtdlObjectModel
     log(`Successfully parsed`)
     return model
   } catch (err) {
@@ -117,7 +117,7 @@ export const parseDirectories = (directory: string, parser: Parser): DtdlObjectM
   const fullJson = combineJson(filepaths)
   if (fullJson === null) return null
 
-  const fullModel = parseDtdl(fullJson, parser)
+  const fullModel = parseDtdl(JSON.stringify(fullJson), parser)
   if (fullModel === null) return null
 
   log(`All files parsed!\n`)
