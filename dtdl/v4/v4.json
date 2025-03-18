@@ -69,15 +69,57 @@
         }
     ],
     "schemas": [
-    {
-      "@id": "dtmi:com:example:InterfaceSchema;1",
-      "@type": "Object",
-      "fields": [
         {
-          "name": "selfReferentialSchema",
-          "schema": "dtmi:com:example:InterfaceSchema;1"
+            "@id": "dtmi:com:example:InterfaceSchema;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "selfReferentialSchema",
+                    "schema": "dtmi:com:example:InterfaceSchema;1"
+                }
+            ]
+        },
+        {
+            "@id": "dtmi:com:example:NestedSchema;1",
+            "@type": "Array",
+            "elementSchema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "objectName",
+                        "schema": "string"
+                    },
+                    {
+                        "name": "level2Array",
+                        "schema": {
+                            "@type": "Array",
+                            "elementSchema": {
+                                "@type": "Array",
+                                "elementSchema": {
+                                    "@type": "Array",
+                                    "elementSchema": {
+                                        "@type": "Array",
+                                        "elementSchema": {
+                                            "@type": "Array",
+                                            "elementSchema": {
+                                                "@type":"Object",
+                                                "fields":[
+                                                    {
+                                                        "@id": "dtmi:com:DeepestLevel;1",
+                                                        "name": "objectName",
+                                                        "schema": "string"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                ]
+            }
         }
-      ]
-    }
-  ]
+    ]
 }

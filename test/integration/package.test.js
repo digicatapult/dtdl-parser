@@ -175,4 +175,27 @@ describe('package exports for DTDL v4 - new schema types', () => {
     expect(schemaEntity.ClassId).to.equal('dtmi:dtdl:class:Object;4')
     expect(model[schemaEntity.fields[0]].schema).to.equal('dtmi:com:example:InterfaceSchema;1')
   })
+
+  it('parse Dtdl to correctly parse complex types that are deep nested at least 6 levels', async () => {
+    const parser = await getInterop()
+    const filepath = path.resolve('dtdl/v4/v4.json')
+    const json = await readFile(filepath, 'utf-8')
+    const model = parseDtdl(json, parser)
+    expect(model).to.have.property('dtmi:com:DeepestLevel;1')
+  })
+  it('parse Dtdl to correctly parse Interface that are deep nested at least 11 levels', async () => {
+    const parser = await getInterop()
+    const filepath = path.resolve('dtdl/v4/inheritedInterface.json')
+    const json = await readFile(filepath, 'utf-8')
+    const model = parseDtdl(json, parser)
+    expect(model).to.have.property('dtmi:com:example:base11;1')
+  })
+  it('parse Dtdl with command request and response being nullable', async () => {
+    const parser = await getInterop()
+    const filepath = path.resolve('dtdl/v4/nullableCommand.json')
+    const json = await readFile(filepath, 'utf-8')
+    const model = parseDtdl(json, parser)
+    expect(model['dtmi:com:NullableRequest;1'].nullable).to.equal(true)
+    expect(model['dtmi:com:NullableResponse;1'].nullable).to.equal(true)
+  })
 })
