@@ -1,0 +1,53 @@
+{
+    "@context": ["dtmi:dtdl:context;4"],
+    "@id": "dtmi:com:inheritedInterface;1",
+    "@type": "Interface",
+    "extends": {
+        "@type": "Interface",
+        "@id": "dtmi:com:example:base0;1",
+        "extends": {
+            "@type": "Interface",
+            "@id": "dtmi:com:example:base1;1",
+            "extends": {
+                "@type": "Interface",
+                "@id": "dtmi:com:example:base2;1",
+                "extends": {
+                    "@type": "Interface",
+                    "@id": "dtmi:com:example:base3;1",
+                    "extends": {
+                        "@type": "Interface",
+                        "@id": "dtmi:com:example:base4;1",
+                        "extends": {
+                            "@type": "Interface",
+                            "@id": "dtmi:com:example:base5;1",
+                            "extends": {
+                                "@type": "Interface",
+                                "@id": "dtmi:com:example:base6;1",
+                                "extends": {
+                                    "@type": "Interface",
+                                    "@id": "dtmi:com:example:base7;1",
+                                    "extends": {
+                                        "@type": "Interface",
+                                        "@id": "dtmi:com:example:base8;1",
+                                        "extends": {
+                                            "@type": "Interface",
+                                            "@id": "dtmi:com:example:base9;1",
+                                            "extends": {
+                                                "@type": "Interface",
+                                                "@id": "dtmi:com:example:base10;1",
+                                                "extends": {
+                                                    "@type": "Interface",
+                                                    "@id": "dtmi:com:example:base11;1"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

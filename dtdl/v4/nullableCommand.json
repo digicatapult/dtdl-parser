@@ -1,0 +1,26 @@
+{
+    "@context": ["dtmi:dtdl:context;4"],
+    "@id": "dtmi:com:NullableInterface;1",
+    "@type": "Interface",
+    "contents": [
+        {
+            "@type": "Command",
+            "name": "typeOfCommand",
+            "@id": "dtmi:com:NullableCommand;1",
+            "request": {
+                "@id": "dtmi:com:NullableRequest;1",
+                "name": "rebootTime",
+                "displayName": "Reboot Time",
+                "description": "Requested time to reboot the device.",
+                "schema": "dateTime",
+                "nullable": true
+            },
+            "response": {
+                "@id": "dtmi:com:NullableResponse;1",
+                "name": "scheduledTime",
+                "schema": "dateTime",
+                "nullable": true
+            }
+        }
+    ]
+}

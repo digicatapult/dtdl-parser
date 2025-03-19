@@ -1,0 +1,125 @@
+{
+    "@context": ["dtmi:dtdl:context;4"],
+    "@id": "dtmi:com:example;1",
+    "@type": "Interface",
+    "extends": {
+        "@type": "Interface",
+        "@id": "dtmi:com:example:base;1"
+    },
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "byteType",
+            "description": "Property Defining an examples byte",
+            "schema": "byte"
+        },
+        {
+            "@type": "Property",
+            "name": "bytesType",
+            "description": "Property Defining an examples bytes",
+            "schema": "bytes"
+        },
+        {
+            "@type": "Property",
+            "name": "decimalType",
+            "description": "Property Defining an examples decimal",
+            "schema": "decimal"
+        },
+        {
+            "@type": "Property",
+            "name": "shortType",
+            "description": "Property Defining an examples short",
+            "schema": "short"
+        },
+        {
+            "@type": "Property",
+            "name": "unsignedByteType",
+            "description": "Property Defining an examples unsignedByte",
+            "schema": "unsignedByte"
+        },
+        {
+            "@type": "Property",
+            "name": "unsignedIntegerType",
+            "description": "Property Defining an examples unsignedInteger",
+            "schema": "unsignedInteger"
+        },
+        {
+            "@type": "Property",
+            "name": "unsignedLongType",
+            "description": "Property Defining an examples unsignedLong",
+            "schema": "unsignedLong"
+        },
+        {
+            "@type": "Property",
+            "name": "unsignedShortType",
+            "description": "Property Defining an examples unsignedShort",
+            "schema": "unsignedShort"
+        },
+        {
+            "@type": "Property",
+            "name": "uuidType",
+            "description": "Property Defining an examples uuid",
+            "schema": "uuid"
+        },
+        {
+            "@type": "Property",
+            "name": "scaledDecimalType",
+            "description": "Property Defining an examples scaledDecimal",
+            "schema": "scaledDecimal"
+        }
+    ],
+    "schemas": [
+        {
+            "@id": "dtmi:com:example:InterfaceSchema;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "selfReferentialSchema",
+                    "schema": "dtmi:com:example:InterfaceSchema;1"
+                }
+            ]
+        },
+        {
+            "@id": "dtmi:com:example:NestedSchema;1",
+            "@type": "Array",
+            "elementSchema": {
+                "@type": "Object",
+                "fields": [
+                    {
+                        "name": "objectName",
+                        "schema": "string"
+                    },
+                    {
+                        "name": "level2Array",
+                        "schema": {
+                            "@type": "Array",
+                            "elementSchema": {
+                                "@type": "Array",
+                                "elementSchema": {
+                                    "@type": "Array",
+                                    "elementSchema": {
+                                        "@type": "Array",
+                                        "elementSchema": {
+                                            "@type": "Array",
+                                            "elementSchema": {
+                                                "@type":"Object",
+                                                "fields":[
+                                                    {
+                                                        "@id": "dtmi:com:DeepestLevel;1",
+                                                        "name": "objectName",
+                                                        "schema": "string"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                ]
+            }
+        }
+    ]
+}
