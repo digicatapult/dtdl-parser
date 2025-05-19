@@ -66,9 +66,8 @@ describe('package exports', () => {
 
   it('parseDirectories to return parsed model', async () => {
     const parser = await getInterop()
-    const parserResult = parseDirectories(fixturesDirPath, parser)
-    expect(parserResult.success).to.equal(true)
-    expect(parserResult.model).to.deep.equal(exampleModel)
+    const model = parseDirectories(fixturesDirPath, parser)
+    expect(model).to.deep.equal(exampleModel)
   })
 
   it('validateDirectories to return true', async () => {
@@ -114,7 +113,8 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/v4.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model).to.have.property('dtmi:com:example;1')
     const exampleInterface = model['dtmi:com:example;1']
 
@@ -159,7 +159,8 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/v4.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model).to.have.property('dtmi:com:example;1')
     const exampleInterface = model['dtmi:com:example;1']
 
@@ -172,7 +173,8 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/v4.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model).to.have.property('dtmi:com:example;1')
     const schemaEntity = model['dtmi:com:example:InterfaceSchema;1']
 
@@ -184,21 +186,24 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/v4.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model).to.have.property('dtmi:com:DeepestLevel;1')
   })
   it('parse Dtdl to correctly parse Interface that are deep nested at least 11 levels', async () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/inheritedInterface.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model).to.have.property('dtmi:com:example:base11;1')
   })
   it('parse Dtdl with command request and response being nullable', async () => {
     const parser = await getInterop()
     const filepath = path.resolve('dtdl/v4/nullableCommand.json')
     const json = await readFile(filepath, 'utf-8')
-    const model = parseDtdl(json, parser)
+    const parsedResult = parseDtdl(json, parser)
+    const model = parsedResult.model
     expect(model['dtmi:com:NullableRequest;1'].nullable).to.equal(true)
     expect(model['dtmi:com:NullableResponse;1'].nullable).to.equal(true)
   })
@@ -211,5 +216,33 @@ describe('package exports for DTDL v4 - new schema types', () => {
     expect(result.error.ExceptionKind).to.equal('Parsing')
     expect(result.error.Errors[0]).to.have.property('Cause')
     expect(result.error.Errors[0]).to.have.property('Action')
+  })
+  it('parseDtdl to return fallback error object on malformed error', () => {
+    const fakeParser = {
+      parse: () => {
+        throw new Error('This is not JSON')
+      },
+    }
+
+    const json = '{}'
+    const result = parseDtdl(json, fakeParser)
+
+    expect(result.success).to.equal(false)
+    expect(result.error.ExceptionKind).to.equal('Parsing')
+    expect(result.error.Errors[0].Cause).to.equal('Failed to parse error message.')
+  })
+  it('parseDtdl to return fallback error object when err is not Error instance', () => {
+    const fakeParser = {
+      parse: () => {
+        throw 'not-an-error-object'
+      },
+    }
+
+    const json = '{}'
+    const result = parseDtdl(json, fakeParser)
+
+    expect(result.success).to.equal(false)
+    expect(result.error.ExceptionKind).to.equal('Parsing')
+    expect(result.error.Errors[0].Cause).to.equal('An unknown error occurred.')
   })
 })
