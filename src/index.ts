@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import type { ModelingException } from '../types/DtdlErr.d.ts'
 import type { DtdlObjectModel, InterfaceInfo } from '../types/DtdlOm.d.ts'
 import { errorHandler, isResolutionException } from './error.js'
 import type { Parser } from './interop.js'
@@ -28,6 +29,8 @@ export const searchForJsonFiles = (directory: string): string[] => {
       return jsonFiles
     }, [] as string[])
 }
+
+type ParseResult = { success: true; model: DtdlObjectModel } | { success: false; error: ModelingException }
 
 const readJsonFile = (filepath: string): unknown | null => {
   try {
@@ -73,15 +76,15 @@ const validateFile = (filepath: string, parserModule: Parser, incResolutionExcep
   }
 }
 
-export const parseDtdl = (json: string, parserModule: Parser): DtdlObjectModel | null => {
+export const parseDtdl = (json: string, parserModule: Parser): ParseResult => {
   try {
     const model = JSON.parse(parserModule.parse(json)) as DtdlObjectModel
     log(`Successfully parsed`)
-    return model
+    return { success: true, model }
   } catch (err) {
     error(`Error parsing`)
-    errorHandler(err)
-    return null
+    const parserError = errorHandler(err)
+    return { success: false, error: parserError }
   }
 }
 
@@ -130,5 +133,6 @@ export const parseDirectories = (directory: string, parser: Parser): DtdlObjectM
   )
   log(`Number of interfaces: ${interfaces.length}`)
 
-  return fullModel
+  if (fullModel.success) return fullModel.model
+  return null
 }

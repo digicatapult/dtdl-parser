@@ -66,8 +66,9 @@ describe('package exports', () => {
 
   it('parseDirectories to return parsed model', async () => {
     const parser = await getInterop()
-    const model = parseDirectories(fixturesDirPath, parser)
-    expect(model).to.deep.equal(exampleModel)
+    const parserResult = parseDirectories(fixturesDirPath, parser)
+    expect(parserResult.success).to.equal(true)
+    expect(parserResult.model).to.deep.equal(exampleModel)
   })
 
   it('validateDirectories to return true', async () => {
@@ -79,15 +80,18 @@ describe('package exports', () => {
   it('parseDtdl to return parsed model', async () => {
     const parser = await getInterop()
     const json = await readFile(fixturesFilepath, 'utf-8')
-    const model = parseDtdl(json, parser)
-    expect(model).to.deep.equal(exampleModel)
+    const parserResult = parseDtdl(json, parser)
+    expect(parserResult.success).to.equal(true)
+    expect(parserResult.model).to.deep.equal(exampleModel)
   })
 
   it('parseDtdl to return null on error', async () => {
     const parser = await getInterop()
     const json = await readFile(errorFilepath, 'utf-8')
-    const model = parseDtdl(json, parser)
-    expect(model).to.deep.equal(null)
+    const parserResult = parseDtdl(json, parser)
+    expect(parserResult.success).to.equal(false)
+    expect(parserResult.error.ExceptionKind).to.equal('Parsing')
+    expect(parserResult.error.Errors[0].Cause).to.be.a('string')
   })
 })
 
@@ -197,5 +201,15 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const model = parseDtdl(json, parser)
     expect(model['dtmi:com:NullableRequest;1'].nullable).to.equal(true)
     expect(model['dtmi:com:NullableResponse;1'].nullable).to.equal(true)
+  })
+  it('parseDtdl to return structured error object on invalid JSON', async () => {
+    const parser = await getInterop()
+    const json = await readFile(errorFilepath, 'utf-8')
+    const result = parseDtdl(json, parser)
+
+    expect(result.success).to.equal(false)
+    expect(result.error.ExceptionKind).to.equal('Parsing')
+    expect(result.error.Errors[0]).to.have.property('Cause')
+    expect(result.error.Errors[0]).to.have.property('Action')
   })
 })
