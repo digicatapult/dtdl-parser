@@ -15,6 +15,14 @@ export const isResolutionException = (err: unknown) => {
   return isResolutionEx(JSON.parse(err.message))
 }
 
+export const isModelingException = (input: unknown): input is ModelingException => {
+  if (typeof input === 'object' && input !== null && 'ExceptionKind' in input) {
+    const exception = input as ModelingException
+    return isParsingEx(exception) || isResolutionEx(exception)
+  }
+  return false
+}
+
 export const errorHandler = (err: unknown): ModelingException => {
   try {
     if (err instanceof Error) {
