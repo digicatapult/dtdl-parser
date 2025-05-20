@@ -215,22 +215,6 @@ describe('package exports for DTDL v4 - new schema types', () => {
     }
 
     const json = '{}'
-    const result = parseDtdl(json, fakeParser)
-
-    expect(result.ExceptionKind).to.equal('Parsing')
-    expect(result.Errors[0].Cause).to.equal('Failed to parse error message.')
-  })
-  it('parseDtdl to return fallback error object when err is not Error instance', () => {
-    const fakeParser = {
-      parse: () => {
-        throw 'not-an-error-object'
-      },
-    }
-
-    const json = '{}'
-    const result = parseDtdl(json, fakeParser)
-
-    expect(result.ExceptionKind).to.equal('Parsing')
-    expect(result.Errors[0].Cause).to.equal('An unknown error occurred.')
+    expect(() => parseDtdl(json, fakeParser)).to.throw('This is not JSON')
   })
 })

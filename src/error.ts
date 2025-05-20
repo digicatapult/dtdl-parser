@@ -24,38 +24,18 @@ export const isModelingException = (input: unknown): input is ModelingException 
 }
 
 export const errorHandler = (err: unknown): ModelingException => {
+  if (!(err instanceof Error)) {
+    error('Non-Error thrown:', err)
+    throw err
+  }
   try {
-    if (err instanceof Error) {
-      const exception = JSON.parse(err.message) as ModelingException
-
-      if (isParsingEx(exception) || isResolutionEx(exception)) {
-        return exception
-      }
+    const exception = JSON.parse(err.message) as ModelingException
+    if (isParsingEx(exception) || isResolutionEx(exception)) {
+      return exception
     }
-
-    return {
-      ExceptionKind: 'Parsing',
-      Errors: [
-        {
-          Cause: 'An unknown error occurred.',
-          Action: 'Check the input or contact support.',
-          ValidationID: 'unknown:error',
-          Value: JSON.stringify(err),
-        },
-      ],
-    } as const
   } catch (parseErr) {
     error('Failed to parse error message:', parseErr)
-    return {
-      ExceptionKind: 'Parsing',
-      Errors: [
-        {
-          Cause: 'Failed to parse error message.',
-          Action: 'Ensure the parser returns valid ModelingException JSON.',
-          ValidationID: 'error:unparseableException',
-          Value: JSON.stringify(err),
-        },
-      ],
-    } as const
   }
+  error('Unknown error from parser:', err)
+  throw err
 }
