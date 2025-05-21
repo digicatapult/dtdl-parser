@@ -15,11 +15,27 @@ export const isResolutionException = (err: unknown) => {
   return isResolutionEx(JSON.parse(err.message))
 }
 
-export const errorHandler = (err: unknown) => {
-  if (!(err instanceof Error)) return error(`Unexpected error: ${err}`)
+export const isModelingException = (input: unknown): input is ModelingException => {
+  if (typeof input === 'object' && input !== null && 'ExceptionKind' in input) {
+    const exception = input as ModelingException
+    return isParsingEx(exception) || isResolutionEx(exception)
+  }
+  return false
+}
 
-  const exception = JSON.parse(err.message) as ModelingException
-
-  if (!(isParsingEx(exception) || isResolutionEx(exception))) error('Unknown exception type')
-  error(exception)
+export const errorHandler = (err: unknown): ModelingException => {
+  if (!(err instanceof Error)) {
+    error('Non-Error thrown:', err)
+    throw err
+  }
+  try {
+    const exception = JSON.parse(err.message) as ModelingException
+    if (isParsingEx(exception) || isResolutionEx(exception)) {
+      return exception
+    }
+  } catch (parseErr) {
+    error('Failed to parse error message:', parseErr)
+  }
+  error('Unknown error from parser:', err)
+  throw err
 }

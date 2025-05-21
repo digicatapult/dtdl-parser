@@ -83,11 +83,11 @@ describe('package exports', () => {
     expect(model).to.deep.equal(exampleModel)
   })
 
-  it('parseDtdl to return null on error', async () => {
+  it('parseDtdl to return ModelingException on error', async () => {
     const parser = await getInterop()
     const json = await readFile(errorFilepath, 'utf-8')
     const model = parseDtdl(json, parser)
-    expect(model).to.deep.equal(null)
+    expect(model.ExceptionKind).to.equal('Parsing')
   })
 })
 
@@ -197,5 +197,24 @@ describe('package exports for DTDL v4 - new schema types', () => {
     const model = parseDtdl(json, parser)
     expect(model['dtmi:com:NullableRequest;1'].nullable).to.equal(true)
     expect(model['dtmi:com:NullableResponse;1'].nullable).to.equal(true)
+  })
+  it('parseDtdl to return structured error object on invalid JSON', async () => {
+    const parser = await getInterop()
+    const json = await readFile(errorFilepath, 'utf-8')
+    const result = parseDtdl(json, parser)
+
+    expect(result.ExceptionKind).to.equal('Parsing')
+    expect(result.Errors[0]).to.have.property('Cause')
+    expect(result.Errors[0]).to.have.property('Action')
+  })
+  it('parseDtdl to return fallback error object on malformed error', () => {
+    const fakeParser = {
+      parse: () => {
+        throw new Error('This is not JSON')
+      },
+    }
+
+    const json = '{}'
+    expect(() => parseDtdl(json, fakeParser)).to.throw('This is not JSON')
   })
 })

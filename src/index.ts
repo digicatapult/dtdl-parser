@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
+import type { ModelingException } from '../types/DtdlErr.d.ts'
 import type { DtdlObjectModel, InterfaceInfo } from '../types/DtdlOm.d.ts'
-import { errorHandler, isResolutionException } from './error.js'
+import { errorHandler, isModelingException, isResolutionException } from './error.js'
 import type { Parser } from './interop.js'
 
 const { log, error } = console
@@ -73,15 +74,14 @@ const validateFile = (filepath: string, parserModule: Parser, incResolutionExcep
   }
 }
 
-export const parseDtdl = (json: string, parserModule: Parser): DtdlObjectModel | null => {
+export const parseDtdl = (json: string, parserModule: Parser): DtdlObjectModel | ModelingException => {
   try {
     const model = JSON.parse(parserModule.parse(json)) as DtdlObjectModel
     log(`Successfully parsed`)
     return model
   } catch (err) {
     error(`Error parsing`)
-    errorHandler(err)
-    return null
+    return errorHandler(err)
   }
 }
 
@@ -118,7 +118,11 @@ export const parseDirectories = (directory: string, parser: Parser): DtdlObjectM
   if (fullJson === null) return null
 
   const fullModel = parseDtdl(JSON.stringify(fullJson), parser)
-  if (fullModel === null) return null
+  if (isModelingException(fullModel)) {
+    log('Error while parsing directories:')
+    log(fullModel)
+    return null
+  }
 
   log(`All files parsed!\n`)
   log(`Entities:`)
