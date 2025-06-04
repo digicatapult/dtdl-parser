@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
     <WasmMainJSPath>modelParser.js</WasmMainJSPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RunAOTCompilation>false</RunAOTCompilation>
+    <RunAOTCompilation>true</RunAOTCompilation>
     <PublishTrimmed>true</PublishTrimmed>
     <InvariantGlobalization>true</InvariantGlobalization>
     <EmccInitialHeapSize>16mb</EmccInitialHeapSize>
@@ -14,6 +14,7 @@
     <EventSourceSupport>false</EventSourceSupport>
     <WasmEmitSymbolMap>false</WasmEmitSymbolMap>
     <WasmAppDir>../../build/interop</WasmAppDir>
+    <OptimizationPreference>Speed</OptimizationPreference>
   </PropertyGroup>
 
   <ItemGroup>
