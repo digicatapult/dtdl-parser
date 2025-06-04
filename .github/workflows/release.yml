@@ -81,7 +81,7 @@ jobs:
       - name: Install Packages
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run publish
       - name: Run tests
         run: npm run ${{ matrix.command }}
 
@@ -127,7 +127,7 @@ jobs:
       - name: Install Packages
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run publish
       - name: Publish to npmjs packages
         run: npm publish --access public
         env:
