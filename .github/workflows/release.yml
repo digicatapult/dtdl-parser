@@ -77,7 +77,7 @@ jobs:
         with:
             dotnet-version: '8.0.x'
       - name: Install wasm tools
-        run: dotnet workload install wasm-tools
+        run: dotnet workload install wasm-tools-net8
       - name: Install Packages
         run: npm ci
       - name: Build
@@ -123,7 +123,7 @@ jobs:
         with:
             dotnet-version: '8.0.x'
       - name: Install wasm tools
-        run: dotnet workload install wasm-tools
+        run: dotnet workload install wasm-tools-net8
       - name: Install Packages
         run: npm ci
       - name: Build
