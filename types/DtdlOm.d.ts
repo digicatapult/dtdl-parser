@@ -16,8 +16,8 @@ export type BooleanType = BooleanInfo
 export interface CommandInfo extends ContentInfo {
   EntityKind: 'Command'
   commandType?: string
-  request?: ModelRequestType
-  response?: ModelResponseType
+  request?: ModeRequestResponseInfo
+  response?: ModeRequestResponseInfo
 }
 
 export type CommandType = CommandInfo
