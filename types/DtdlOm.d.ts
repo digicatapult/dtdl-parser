@@ -16,11 +16,88 @@ export type BooleanType = BooleanInfo
 export interface CommandInfo extends ContentInfo {
   EntityKind: 'Command'
   commandType?: string
-  request?: string
-  response?: string
+  request?: ModelRequestType
+  response?: ModelResponseType
 }
 
 export type CommandType = CommandInfo
+
+export interface ModeRequestResponseInfo {
+  name: string
+  comment?: string
+  description?: { [languageCode: string]: string }
+  displayName?: { [languageCode: string]: string }
+  schema?:
+    | string // Primitive schemas, geospatial schemas, or DTMI references
+    | {
+        '@type': 'Array'
+        '@id'?: string
+        comment?: string
+        description?: { [languageCode: string]: string }
+        displayName?: { [languageCode: string]: string }
+        elementSchema: string | object // Can be primitive or complex schema
+      }
+    | {
+        '@type': 'Enum'
+        '@id'?: string
+        comment?: string
+        description?: { [languageCode: string]: string }
+        displayName?: { [languageCode: string]: string }
+        valueSchema: string // Must be integer or string
+        enumValues?: Array<{
+          '@type'?: 'EnumValue'
+          '@id'?: string
+          name: string
+          enumValue: string | number | boolean
+          comment?: string
+          description?: { [languageCode: string]: string }
+          displayName?: { [languageCode: string]: string }
+        }>
+      }
+    | {
+        '@type': 'Map'
+        '@id'?: string
+        comment?: string
+        description?: { [languageCode: string]: string }
+        displayName?: { [languageCode: string]: string }
+        mapKey: {
+          '@type'?: 'MapKey'
+          '@id'?: string
+          name: string
+          schema: 'string' // Must be string
+          comment?: string
+          description?: { [languageCode: string]: string }
+          displayName?: { [languageCode: string]: string }
+        }
+        mapValue: {
+          '@type'?: 'MapValue'
+          '@id'?: string
+          name: string
+          schema: string | object // Can be any schema
+          comment?: string
+          description?: { [languageCode: string]: string }
+          displayName?: { [languageCode: string]: string }
+        }
+      }
+    | {
+        '@type': 'Object'
+        '@id'?: string
+        comment?: string
+        description?: { [languageCode: string]: string }
+        displayName?: { [languageCode: string]: string }
+        fields?: Array<{
+          '@type'?: 'Field'
+          '@id'?: string
+          name: string
+          schema: string | object // Can be any schema
+          comment?: string
+          description?: { [languageCode: string]: string }
+          displayName?: { [languageCode: string]: string }
+        }>
+      }
+}
+
+export type ModeRequestResponseType = ModeRequestResponseInfo
 
 export interface CommandPayloadInfo extends SchemaFieldInfo {
   EntityKind: 'CommandPayload' | 'CommandRequest' | 'CommandResponse'
