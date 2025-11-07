@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dtdl-parser",
-  "version": "1.0.61",
+  "version": "1.1.0",
   "description": "JS tool to parse DTDL defined Ontologies",
   "main": "build/index.js",
   "type": "module",
@@ -68,6 +68,7 @@
     "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">= 20"
+    "node": "24.x",
+    "npm": "11.x"
   }
 }
