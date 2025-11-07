@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6.0.0
+      - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
           cache: 'npm'
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6.0.0
+      - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
           cache: 'npm'
@@ -116,7 +116,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6.0.0
+      - uses: actions/setup-node@v6
         with:
           node-version: '24.x'
           cache: 'npm'
