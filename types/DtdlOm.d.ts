@@ -27,74 +27,7 @@ export interface ModeRequestResponseInfo {
   comment?: string
   description?: { [languageCode: string]: string }
   displayName?: { [languageCode: string]: string }
-  schema?:
-    | string // Primitive schemas, geospatial schemas, or DTMI references
-    | {
-        '@type': 'Array'
-        '@id'?: string
-        comment?: string
-        description?: { [languageCode: string]: string }
-        displayName?: { [languageCode: string]: string }
-        elementSchema: string | object // Can be primitive or complex schema
-      }
-    | {
-        '@type': 'Enum'
-        '@id'?: string
-        comment?: string
-        description?: { [languageCode: string]: string }
-        displayName?: { [languageCode: string]: string }
-        valueSchema: string // Must be integer or string
-        enumValues?: Array<{
-          '@type'?: 'EnumValue'
-          '@id'?: string
-          name: string
-          enumValue: string | number | boolean
-          comment?: string
-          description?: { [languageCode: string]: string }
-          displayName?: { [languageCode: string]: string }
-        }>
-      }
-    | {
-        '@type': 'Map'
-        '@id'?: string
-        comment?: string
-        description?: { [languageCode: string]: string }
-        displayName?: { [languageCode: string]: string }
-        mapKey: {
-          '@type'?: 'MapKey'
-          '@id'?: string
-          name: string
-          schema: 'string' // Must be string
-          comment?: string
-          description?: { [languageCode: string]: string }
-          displayName?: { [languageCode: string]: string }
-        }
-        mapValue: {
-          '@type'?: 'MapValue'
-          '@id'?: string
-          name: string
-          schema: string | object // Can be any schema
-          comment?: string
-          description?: { [languageCode: string]: string }
-          displayName?: { [languageCode: string]: string }
-        }
-      }
-    | {
-        '@type': 'Object'
-        '@id'?: string
-        comment?: string
-        description?: { [languageCode: string]: string }
-        displayName?: { [languageCode: string]: string }
-        fields?: Array<{
-          '@type'?: 'Field'
-          '@id'?: string
-          name: string
-          schema: string | object // Can be any schema
-          comment?: string
-          description?: { [languageCode: string]: string }
-          displayName?: { [languageCode: string]: string }
-        }>
-      }
+  schema?: SchemaType
 }
 
 export type ModeRequestResponseType = ModeRequestResponseInfo
@@ -366,7 +299,7 @@ export type PrimitiveSchemaType =
 
 export interface PropertyInfo extends ContentInfo {
   EntityKind: 'Property'
-  schema: string
+  schema: SchemaType
   writable: boolean
 }
 
@@ -418,7 +351,7 @@ export type StringType = StringInfo
 
 export interface TelemetryInfo extends ContentInfo {
   EntityKind: 'Telemetry'
-  schema: string
+  schema: SchemaType
 }
 
 export type TelemetryType = TelemetryInfo
