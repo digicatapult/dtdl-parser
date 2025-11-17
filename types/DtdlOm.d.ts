@@ -16,8 +16,8 @@ export type BooleanType = BooleanInfo
 export interface CommandInfo extends ContentInfo {
   EntityKind: 'Command'
   commandType?: string
-  request?: ModeRequestResponseInfo
-  response?: ModeRequestResponseInfo
+  request?: string
+  response?: string
 }
 
 export type CommandType = CommandInfo
@@ -299,7 +299,7 @@ export type PrimitiveSchemaType =
 
 export interface PropertyInfo extends ContentInfo {
   EntityKind: 'Property'
-  schema: SchemaType
+  schema: string
   writable: boolean
 }
 
@@ -351,7 +351,7 @@ export type StringType = StringInfo
 
 export interface TelemetryInfo extends ContentInfo {
   EntityKind: 'Telemetry'
-  schema: SchemaType
+  schema: string
 }
 
 export type TelemetryType = TelemetryInfo
