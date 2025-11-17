@@ -22,16 +22,6 @@ export interface CommandInfo extends ContentInfo {
 
 export type CommandType = CommandInfo
 
-export interface ModeRequestResponseInfo {
-  name: string
-  comment?: string
-  description?: { [languageCode: string]: string }
-  displayName?: { [languageCode: string]: string }
-  schema?: SchemaType
-}
-
-export type ModeRequestResponseType = ModeRequestResponseInfo
-
 export interface CommandPayloadInfo extends SchemaFieldInfo {
   EntityKind: 'CommandPayload' | 'CommandRequest' | 'CommandResponse'
 }
