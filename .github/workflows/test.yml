@@ -25,7 +25,7 @@ jobs:
 
   generate-sbom:
     name: 'Generate SBOM'
-    uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@feature/generate-sbom-npm
+    uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@main
     with:
       node_version: '24.x'
       sbom_tool: '@cyclonedx/cyclonedx-npm'
