@@ -26,6 +26,7 @@ jobs:
       npm_build_command: 'dotnet workload install wasm-tools-net8 && npm run publish'
       docker_compose_file: ''
       coverage: true
+      coverage_config_json: .c8rc.json
 
   check-version:
     name: 'Check version'
