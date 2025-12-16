@@ -25,6 +25,8 @@ jobs:
 
   generate-sbom:
     name: 'Generate SBOM'
+    permissions:
+      contents: read
     uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@main
     with:
       node_version: '24.x'

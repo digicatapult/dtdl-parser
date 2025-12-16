@@ -36,11 +36,20 @@ jobs:
 
   generate-sbom:
     name: 'Generate SBOM'
+    permissions:
+      contents: read
     uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@main
     with:
       node_version: '24.x'
       sbom_tool: '@cyclonedx/cyclonedx-npm'
       npm_build_command: 'dotnet workload install wasm-tools-net8 && npm run publish'
+      additional_args: "--ignore-npm-errors"
+      enable_check_version: true
+      enable_dtrack_project: true
+      sbom_output_file: ${{ github.event.repository.name }}.cdx.json
+    secrets:
+      DTRACK_APIKEY: ${{ secrets.DTRACK_APIKEY }}
+      DTRACK_HOSTNAME: ${{ secrets.DTRACK_HOSTNAME }}
 
   publish-npm:
     name: 'Publish package to NPMJS'
