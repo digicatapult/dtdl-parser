@@ -8,8 +8,6 @@ jobs:
   static-checks:
     name: Run Static Analysis Checks
     uses: digicatapult/shared-workflows/.github/workflows/static-checks-npm.yml@bug/private-repo
-    permissions:
-      security-events: write
     with:
       node_version: '24.x'
       matrix_commands: '["lint", "depcheck", "check"]'
@@ -17,8 +15,6 @@ jobs:
   tests:
     name: Run tests
     uses: digicatapult/shared-workflows/.github/workflows/tests-npm.yml@bug/private-repo
-    permissions:
-      pull-requests: write
     with:
       node_version: '24.x'
       tests: '["test", "test:integration"]'
@@ -30,7 +26,6 @@ jobs:
   generate-sbom:
     name: 'Generate SBOM'
     uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@bug/private-repo
-    permissions: {}
     with:
       node_version: '24.x'
       sbom_tool: '@cyclonedx/cyclonedx-npm'
@@ -39,4 +34,3 @@ jobs:
   check-version:
     name: 'Check version'
     uses: digicatapult/shared-workflows/.github/workflows/check-version.yml@bug/private-repo
-    permissions: {}
