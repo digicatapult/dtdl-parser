@@ -140,13 +140,7 @@ export interface EntityInfo {
 }
 
 export type EntityType =
-  | EntityInfo
-  | CommandTypeType
-  | InterfaceType
-  | LatentTypeType
-  | NamedEntityType
-  | SchemaType
-  | UnitType
+  EntityInfo | CommandTypeType | InterfaceType | LatentTypeType | NamedEntityType | SchemaType | UnitType
 
 export interface EnumInfo extends ComplexSchemaInfo {
   EntityKind: 'Enum'
@@ -249,13 +243,7 @@ export interface NamedEntityInfo extends EntityInfo {
 }
 
 export type NamedEntityType =
-  | NamedEntityInfo
-  | ContentType
-  | EnumValueType
-  | MapKeyType
-  | NamedLatentTypeType
-  | SchemaFieldType
-  | UnitAttributeType
+  NamedEntityInfo | ContentType | EnumValueType | MapKeyType | NamedLatentTypeType | SchemaFieldType | UnitAttributeType
 
 export interface NamedLatentTypeInfo extends NamedEntityInfo {
   EntityKind: 'NamedLatentType'
@@ -281,11 +269,7 @@ export interface PrimitiveSchemaInfo extends SchemaInfo {
 }
 
 export type PrimitiveSchemaType =
-  | PrimitiveSchemaInfo
-  | BooleanType
-  | NumericSchemaType
-  | StringType
-  | TemporalSchemaType
+  PrimitiveSchemaInfo | BooleanType | NumericSchemaType | StringType | TemporalSchemaType
 
 export interface PropertyInfo extends ContentInfo {
   EntityKind: 'Property'
