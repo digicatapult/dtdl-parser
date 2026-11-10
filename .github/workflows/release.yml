@@ -11,7 +11,7 @@ jobs:
     permissions:
       security-events: write
     with:
-      node_version: '24.x'
+      node_version: '26.x'
       matrix_commands: '["lint", "depcheck", "check"]'
 
   tests:
@@ -20,7 +20,7 @@ jobs:
     permissions:
       pull-requests: write
     with:
-      node_version: '24.x'
+      node_version: '26.x'
       tests: '["test", "test:integration"]'
       npm_build_command: 'dotnet workload install wasm-tools-net8 && npm run publish'
       docker_compose_file: ''
@@ -37,7 +37,7 @@ jobs:
     permissions: {}
     uses: digicatapult/shared-workflows/.github/workflows/generate-sbom-npm.yml@main
     with:
-      node_version: '24.x'
+      node_version: '26.x'
       sbom_tool: '@cyclonedx/cyclonedx-npm'
       npm_build_command: 'dotnet workload install wasm-tools-net8 && npm run publish'
       additional_args: "--ignore-npm-errors"
@@ -61,7 +61,7 @@ jobs:
       id-token: write
       packages: write
     with:
-      node_version: '24.x'
+      node_version: '26.x'
       registry_url: 'https://registry.npmjs.org'
       registry_scope: '@digicatapult'
       npm_build_command: 'dotnet workload install wasm-tools-net8 && npm run publish'
